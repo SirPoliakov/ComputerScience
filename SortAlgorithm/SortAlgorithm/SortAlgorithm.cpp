@@ -5,37 +5,48 @@
 
 using namespace std;
 
-using nombre = int;
+using Index = int;
+using Nombre = int;
 using Table = vector<nombre>;
 
-Table bubbleSort(Table& myTable,int indexLeft,  int indexPiv )
+Table recBubbleSort(Table& myTable,Index indexLeft, Index indexPiv )
 {
-    int tempLeft, tempPiv;
+    Nombre tempLeftVal, tempPivVal;
     if (indexPiv > 0) {
         if (indexLeft < indexPiv) {
             if (myTable[indexPiv] <= myTable[indexLeft])
             {
-                tempPiv = myTable[indexPiv];
+                tempPivVal = myTable[indexPiv];
                 myTable[indexPiv] = myTable[indexLeft];
-                tempLeft = myTable[indexPiv - 1];
-                myTable[indexPiv - 1] = tempPiv;
-                myTable[indexLeft] = tempLeft;
+                tempLeftVal = myTable[indexPiv - 1];
+                myTable[indexPiv - 1] = tempPivVal;
+                myTable[indexLeft] = tempLeftVal;
 
-                return bubbleSort(myTable, indexLeft + 1, indexPiv);
+                return recBubbleSort(myTable, indexLeft + 1, indexPiv);
 
             }
-            else return bubbleSort(myTable, indexLeft + 1, indexPiv);
+            else return recBubbleSort(myTable, indexLeft + 1, indexPiv);
 
         }
         else
         {
-            return bubbleSort(myTable, 0, indexPiv - 1);
+            return recBubbleSort(myTable, 0, indexPiv - 1);
         }
     }
     else
     {
         return myTable;
     }
+}
+Table itBubbleSort(Table& myTable)
+{
+    Nombre tempLeftVal, tempPivVal;
+    Index indexLeft, indexPiv;
+
+    tempPivVal = myTable[myTable.size()];
+    Index = myTable[0];
+
+   while(tempPiv != )
 }
 
 //bool isSorted(Table myTable)
@@ -71,7 +82,7 @@ int main()
 
     cout << " ------------------------------- || SORTED TABLE ||----------------------------------- " << endl << endl;
 
-    mySortedTable = bubbleSort(myTable, 0, myTable.size()-1);
+    mySortedTable = recBubbleSort(myTable, 0, myTable.size()-1);
 
     tableDisplay(mySortedTable);
 
