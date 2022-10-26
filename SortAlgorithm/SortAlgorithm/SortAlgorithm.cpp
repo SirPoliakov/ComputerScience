@@ -7,7 +7,95 @@ using namespace std;
 
 using Index = int;
 using Nombre = int;
-using Table = vector<nombre>;
+using Table = vector<Nombre>;
+
+#include <iostream>
+
+
+//-----------------------------------------------------------------------------------------------
+
+
+#include <cmath>
+int frogJumps(int X, int Y, int D) {
+
+    if ((Y - X) <= 0) return 0;
+
+    int remainer = (Y - X) % D;
+    float calc = (Y - X) / D; int res = 0;
+
+    if (remainer != 0)
+        res = static_cast<int>(std::round(calc) + 1);
+    else
+    {
+        res = static_cast<int>(std::round(calc));
+    }
+
+    return res;
+
+}
+
+
+//------------------------------------------------------------------------------------------------
+
+
+#include <algorithm>
+int detectUnpairedInt(vector<int>& A) {
+
+    std::sort(A.begin(), A.end());
+    auto ite = A.begin();
+    while (ite < A.end())
+    {
+        auto iteTemp = ite + 1;
+        if (*ite == *iteTemp)
+        {
+            ite += 2;
+        }
+        else
+        {
+            break;
+        }
+
+    }
+
+    return *ite;
+
+}
+
+
+
+//------------------------------------------------------------------------------------------------
+
+
+vector<int> rotateArray(vector<int>& A, int K) {
+
+    long unsigned int sizeA{ A.size() };
+    long unsigned int newPosition{ (sizeA % K) };
+    if (newPosition == 0) return A;
+    else
+    {
+        vector<int> rotatedA(A.size());
+        auto iteRA{ rotatedA.begin() };
+        auto iteA{ A.begin() };
+        long unsigned int rSize{ rotatedA.size() };
+        newPosition++;
+
+        while (iteA < A.end())
+        {
+            rotatedA[newPosition] = *iteA;
+            if (newPosition < rSize - 1)
+            {
+                newPosition++;
+            }
+            else
+            {
+                newPosition = 0;
+            }
+
+            iteA++;
+        }
+        return rotatedA;
+    }
+}
 
 
 //-----------------------------------------------------------------------------------------------------------------
@@ -47,7 +135,7 @@ int bitGap(int N) {
 //--------------------------------------------------------------------------------------------------------------
 
 
-Table recBubbleSort(Table& myTable,Index indexLeft, Index indexPiv )
+Table recQuickSort(Table& myTable,Index indexLeft, Index indexPiv )
 {
     Nombre tempLeftVal, tempPivVal;
     if (indexPiv > 0) {
@@ -60,15 +148,15 @@ Table recBubbleSort(Table& myTable,Index indexLeft, Index indexPiv )
                 myTable[indexPiv - 1] = tempPivVal;
                 myTable[indexLeft] = tempLeftVal;
 
-                return recBubbleSort(myTable, indexLeft + 1, indexPiv);
+                return recQuickSort(myTable, indexLeft + 1, indexPiv);
 
             }
-            else return recBubbleSort(myTable, indexLeft + 1, indexPiv);
+            else return recQuickSort(myTable, indexLeft + 1, indexPiv);
 
         }
         else
         {
-            return recBubbleSort(myTable, 0, indexPiv - 1);
+            return recQuickSort(myTable, 0, indexPiv - 1);
         }
     }
     else
@@ -81,15 +169,15 @@ Table recBubbleSort(Table& myTable,Index indexLeft, Index indexPiv )
 //--------------------------------------------------------------------------------------------------------------
 
 
-Table itBubbleSort(Table& myTable)
+Table itQuickSort(Table& myTable)
 {
     Nombre tempLeftVal, tempPivVal;
     Index indexLeft, indexPiv;
 
     tempPivVal = myTable[myTable.size()];
-    Index = myTable[0];
+    indexLeft = myTable[0];
 
-   while(tempPiv != )
+   while(tempPivVal!= )
 }
 
 //bool isSorted(Table myTable)
