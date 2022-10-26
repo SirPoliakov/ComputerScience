@@ -1,13 +1,51 @@
 #include <iostream>
 #include <vector>
 #include <random>
-
+#include <bitset>
 
 using namespace std;
 
 using Index = int;
 using Nombre = int;
 using Table = vector<nombre>;
+
+
+//-----------------------------------------------------------------------------------------------------------------
+
+
+int bitGap(int N) {
+
+    const int size = 24;
+    std::bitset<size> myBitset(N);
+    int bitCount = 0;
+
+    if (myBitset.all()) return 0;
+    if (N == 0) return 0;
+
+    std::size_t index = 0; int max = 0; int count = 0;
+    while (index < size)
+    {
+        if (myBitset.test(index))
+        {
+            if (max < count) max = count;
+            count = 0; bitCount++;
+        }
+        else
+        {
+            count++;
+        }
+
+        index++;
+    }
+
+    if (bitCount > 1) return max;
+    else return 0;
+
+}
+
+
+//--------------------------------------------------------------------------------------------------------------
+
 
 Table recBubbleSort(Table& myTable,Index indexLeft, Index indexPiv )
 {
@@ -38,6 +76,11 @@ Table recBubbleSort(Table& myTable,Index indexLeft, Index indexPiv )
         return myTable;
     }
 }
+
+
+//--------------------------------------------------------------------------------------------------------------
+
+
 Table itBubbleSort(Table& myTable)
 {
     Nombre tempLeftVal, tempPivVal;
