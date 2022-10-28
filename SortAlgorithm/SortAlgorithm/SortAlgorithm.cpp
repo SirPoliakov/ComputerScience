@@ -21,7 +21,7 @@ int tapeEquilibrium(vector<int>& A) {
 
     std::sort(A.begin(), A.end());
 
-    int sizeA = A.size(); int split{ 0 };
+    int sizeA = static_cast<int>(A.size()); int split{ 0 };
     if (sizeA % 2 == 0)
     {
         split = (sizeA / 2);
@@ -158,8 +158,8 @@ vector<int> rotateArray(vector<int>& A, int K) {
         else return A;
     }
 
-    long unsigned int sizeA{ A.size() };
-    long unsigned int newPosition{ 0 };
+    int sizeA{ static_cast<int>(A.size()) };
+    int newPosition{ 0 };
     int modPos = sizeA % K;
 
     if (K > static_cast<int>(sizeA))
@@ -181,7 +181,7 @@ vector<int> rotateArray(vector<int>& A, int K) {
         vector<int> rotatedA(A.size());
         auto iteRA{ rotatedA.begin() };
         auto iteA{ A.begin() };
-        long unsigned int rSize{ rotatedA.size() };
+        int rSize{ static_cast<int>(rotatedA.size()) };
 
         newPosition++;
 
@@ -240,7 +240,7 @@ int bitGap(int N) {
 
 
 //---------------------------------------------------|| NON OPTI REC QUICK SORT || -----------------------------------------------------------
-// Crash above a few dozens of elements i think!
+// Crashes above 76 random draws of elements (but i find my algo quite elegant)
 
 Table recQuickSort(Table& myTable,Index indexLeft, Index indexPiv )
 {
@@ -286,14 +286,16 @@ void tableDisplay(Table& myTable)
 
 int main()
 {
+    //------------------------------- || QUICK SORT TEST || -----------------------------\\
+
     cout << "Let's pick 6 random numbers..." << endl;
     cout << " . . . " << endl << endl;
 
     random_device dev;
     mt19937 rng(dev());
-    uniform_int_distribution<std::mt19937::result_type> dist20(0, 19);
+    uniform_int_distribution<std::mt19937::result_type> dist(1, 77);
 
-    Table myTable; for (int i = 0; i < 20; i++) myTable.push_back(dist20(rng));
+    Table myTable; for (int i = 0; i < 76; i++) myTable.push_back(dist(rng));
     Table mySortedTable;
 
     cout << " ------------------------------- || UNSORTED TABLE ||----------------------------------- " << endl << endl;
@@ -308,8 +310,63 @@ int main()
 
     tableDisplay(mySortedTable);
 
-    cout << " ------------------------------- || END OF SIMULATION || ------------------------------- " << endl;
+    cout << " ------------------------------- || END OF SIMULATION || ------------------------------- " << endl << endl;;
 
+
+    //---------------------------------------------- || CODILITY TESTS || -------------------------------------------------\\
+
+
+    // -----------  BIT GAP : 
+    int test = 110;
+    // int = 110 --> bit = 0 1 1 0 1 1 1 0
+    //expected answer = 1
+    int res = bitGap(test);
+
+    cout << "Test : " << test << " bit gap = " << res << endl;
+    //---------------------------------------------------------
+
+
+
+    // -----------  ARRAY ROTATE :
+    vector<int> testArray{ 2, 4, 1, 7, 6, 5, 9 };
+    int KTEST = 24;
+    vector<int> resArray = rotateArray(testArray, KTEST);
+    cout << "[";
+    for (auto it = resArray.begin(); it < resArray.end(); it++)
+    {
+        cout << *it << ",";
+    }
+    cout << "]" << endl;
+    //---------------------------------------------------------
+
+
+
+    // -----------  DETECT UNAPAIRED INT :
+    //---------------------------------------------------------
+
+
+
+    // -----------  FROG JUMP :
+    //---------------------------------------------------------
+
+
+
+    // -----------  PERM MISSING ELEMENT :
+    //---------------------------------------------------------
+
+
+
+    // -----------  PERM MISSING ELEMENT :
+    //---------------------------------------------------------
+
+
+
+
+    // -----------  TAPE EQUILIBRIUM :
+    //---------------------------------------------------------   
+
+
+    //------------------------------------------------- || FIN DES TEST || ---------------------------------------------\\
 
     return 0;
 
