@@ -9,7 +9,7 @@ using Index = int;
 using Nombre = int;
 using Table = vector<Nombre>;
 
-#include <iostream>
+
 
 
 //-----------------------------------------------------------------------------------------------
@@ -19,9 +19,9 @@ using Table = vector<Nombre>;
 int frogJumps(int X, int Y, int D) {
 
     if ((Y - X) <= 0) return 0;
-
-    int remainer = (Y - X) % D;
-    float calc = (Y - X) / D; int res = 0;
+    int gap = Y - X;
+    int remainer = gap % D;
+    int calc = gap / D; int res = 0;
 
     if (remainer != 0)
         res = static_cast<int>(std::round(calc) + 1);
@@ -68,8 +68,33 @@ int detectUnpairedInt(vector<int>& A) {
 
 vector<int> rotateArray(vector<int>& A, int K) {
 
+    if (A.size() <= 1) return A;
+    if (static_cast<int>(A.size()) == 2)
+    {
+        if (K % 2 != 0) {
+            int p1 = A[1]; A[1] = A[0]; A[0] = p1;
+            return A;
+        }
+        else return A;
+    }
+
     long unsigned int sizeA{ A.size() };
-    long unsigned int newPosition{ (sizeA % K) };
+    long unsigned int newPosition{ 0 };
+    int modPos = sizeA % K;
+
+    if (K > static_cast<int>(sizeA))
+    {
+        newPosition = modPos;
+    }
+    else if (modPos == 0)
+    {
+        return A;
+    }
+    else
+    {
+        newPosition = K - 1;
+    }
+
     if (newPosition == 0) return A;
     else
     {
@@ -77,6 +102,7 @@ vector<int> rotateArray(vector<int>& A, int K) {
         auto iteRA{ rotatedA.begin() };
         auto iteA{ A.begin() };
         long unsigned int rSize{ rotatedA.size() };
+
         newPosition++;
 
         while (iteA < A.end())
@@ -169,22 +195,6 @@ Table recQuickSort(Table& myTable,Index indexLeft, Index indexPiv )
 //--------------------------------------------------------------------------------------------------------------
 
 
-Table itQuickSort(Table& myTable)
-{
-    Nombre tempLeftVal, tempPivVal;
-    Index indexLeft, indexPiv;
-
-    tempPivVal = myTable[myTable.size()];
-    indexLeft = myTable[0];
-
-   while(tempPivVal!= )
-}
-
-//bool isSorted(Table myTable)
-//{
-//
-//}
-
 void tableDisplay(Table& myTable)
 {
     for (unsigned int i = 0; i < myTable.size() ; i++)
@@ -213,7 +223,7 @@ int main()
 
     cout << " ------------------------------- || SORTED TABLE ||----------------------------------- " << endl << endl;
 
-    mySortedTable = recBubbleSort(myTable, 0, myTable.size()-1);
+    mySortedTable = recQuickSort(myTable, 0, myTable.size()-1);
 
     tableDisplay(mySortedTable);
 
