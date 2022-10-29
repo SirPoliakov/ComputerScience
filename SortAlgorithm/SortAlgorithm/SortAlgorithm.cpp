@@ -11,7 +11,7 @@ using Table = vector<Nombre>;
 
 //------------------------------------------------- || TAPE EQUILIBRIUM || -------------------------------------------------------
 
-// non fonctionnel
+// non fonctionnel 
 
 #include <math.h>
 
@@ -122,10 +122,11 @@ int frogJumps(int X, int Y, int D) {
 int detectUnpairedInt(vector<int>& A) {
 
     std::sort(A.begin(), A.end());
-    auto ite = A.begin();
+    auto ite = A.begin(); auto iteTemp = ite;
     while (ite < A.end())
     {
-        auto iteTemp = ite + 1;
+        if (ite + 1 < A.end()) iteTemp = ite + 1;
+        else return *ite;
         if (*ite == *iteTemp)
         {
             ite += 2;
@@ -160,30 +161,20 @@ vector<int> rotateArray(vector<int>& A, int K) {
 
     int sizeA{ static_cast<int>(A.size()) };
     int newPosition{ 0 };
-    int modPos = sizeA % K;
+    int modPos = K % sizeA;
 
-    if (K > static_cast<int>(sizeA))
-    {
-        newPosition = modPos;
-    }
-    else if (modPos == 0)
+    if (modPos == 0)
     {
         return A;
     }
     else
     {
-        newPosition = K - 1;
+        newPosition = modPos;
     }
-
-    if (newPosition == 0) return A;
-    else
-    {
         vector<int> rotatedA(A.size());
         auto iteRA{ rotatedA.begin() };
         auto iteA{ A.begin() };
         int rSize{ static_cast<int>(rotatedA.size()) };
-
-        newPosition++;
 
         while (iteA < A.end())
         {
@@ -200,7 +191,6 @@ vector<int> rotateArray(vector<int>& A, int K) {
             iteA++;
         }
         return rotatedA;
-    }
 }
 
 
@@ -293,9 +283,9 @@ int main()
 
     random_device dev;
     mt19937 rng(dev());
-    uniform_int_distribution<std::mt19937::result_type> dist(1, 77);
+    uniform_int_distribution<std::mt19937::result_type> dist(1, 20);
 
-    Table myTable; for (int i = 0; i < 76; i++) myTable.push_back(dist(rng));
+    Table myTable; for (int i = 0; i < 19; i++) myTable.push_back(dist(rng));
     Table mySortedTable;
 
     cout << " ------------------------------- || UNSORTED TABLE ||----------------------------------- " << endl << endl;
@@ -320,49 +310,61 @@ int main()
     int test = 110;
     // int = 110 --> bit = 0 1 1 0 1 1 1 0
     //expected answer = 1
-    int res = bitGap(test);
-
-    cout << "Test : " << test << " bit gap = " << res << endl;
+    int res1 = bitGap(test);
+    cout << " ------------ TEST BIT GAP ------------ " << endl;
+    cout << "Test : " << test << " bit gap = " << res1 << endl << endl;
     //---------------------------------------------------------
 
 
 
     // -----------  ARRAY ROTATE :
-    vector<int> testArray{ 2, 4, 1, 7, 6, 5, 9 };
-    int KTEST = 24;
-    vector<int> resArray = rotateArray(testArray, KTEST);
+    cout << " ------------ TEST ARRAY ROTATE ------------ " << endl;
+    vector<int> testArray1{ 3, 8, 9, 7, 6 };
+    int KTEST = 3;
+    vector<int> resArray = rotateArray(testArray1, KTEST);
     cout << "[";
     for (auto it = resArray.begin(); it < resArray.end(); it++)
     {
         cout << *it << ",";
     }
-    cout << "]" << endl;
+    cout << "]" << endl << endl;
     //---------------------------------------------------------
 
 
 
     // -----------  DETECT UNAPAIRED INT :
+    cout << " ------------ TEST DETECT UNPAIRED INT ------------ " << endl;
+    vector<int> testArray2{ 2, 4, 2, 3, 4, 3, 66};
+    int res2 = detectUnpairedInt(testArray2);
+    cout << " Intru = " << res2 << endl << endl;;
     //---------------------------------------------------------
 
 
 
     // -----------  FROG JUMP :
+    int X{ 15 }; int Y{ 82 }; int D{ 7 };
+    int res3 = frogJumps(X, Y, D);
+    cout << " ------------ TEST FROG ------------ " << endl;
+    cout << "Pour aller a " << Y << " en partant de " << X << " avec des bon de " << D << ", la grenouille fera au minimum " << res3 << " bonds." << endl << endl;
     //---------------------------------------------------------
 
 
 
     // -----------  PERM MISSING ELEMENT :
-    //---------------------------------------------------------
-
-
-
-    // -----------  PERM MISSING ELEMENT :
+    cout << " ------------ TEST PERM MISSING ELEM ------------ " << endl;
+    vector<int> testArray3{1,2,3,4,5,6,8,9};
+    int res4 = permMissingElem(testArray3);
+    cout << "Pour 1,2,3,4,5,6,8,9 , l'element manquant est " << res4 << endl << endl;
     //---------------------------------------------------------
 
 
 
 
     // -----------  TAPE EQUILIBRIUM :
+    cout << " ------------ TEST TAPE EQUILIBRIUM ------------ " << endl;
+    vector<int> testArray4{ 1,1,2,3,2,7,3,4,4,1,1 };
+    int res5 = tapeEquilibrium(testArray4);
+    cout << "Le plus petit ecart est : " << res5 << endl;
     //---------------------------------------------------------   
 
 
